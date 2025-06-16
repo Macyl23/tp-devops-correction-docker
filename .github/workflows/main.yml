@@ -54,6 +54,7 @@ jobs:
           context: ./simple-api
           # Note: tags has to be all lower-case
           tags: ${{env.DOCKER_HUB_USERNAME}}/${{env.DOCKER_IMAGE_NAME}}
+          push: ${{ github.ref == 'refs/heads/main' }}
 
       # - name: Build image and push database
       #     # DO the same for database
