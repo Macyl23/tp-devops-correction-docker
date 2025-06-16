@@ -34,7 +34,9 @@ jobs:
     needs: test-backend
     runs-on: ubuntu-24.04
     env:
-      DOCKER_IMAGE_NAME: "tp-devops-simple-api"
+      API_IMAGE_NAME: "tp-devops-simple-api"
+      DATABASE_IMAGE_NAME: "tp-devops-simple-database"
+      HTTP_SERVER_IMAGE_NAME: "tp-devops-simple-http-server"
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
     steps:
@@ -53,7 +55,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./simple-api
           # Note: tags has to be all lower-case
-          tags: ${{env.DOCKER_HUB_USERNAME}}/${{env.DOCKER_IMAGE_NAME}}:latest
+          tags: ${{env.DOCKER_HUB_USERNAME}}/${{env.API_IMAGE_NAME}}:latest
           push: ${{ github.ref == 'refs/heads/main' }}
 
       # Build and push database image
