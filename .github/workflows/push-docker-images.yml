@@ -1,41 +1,20 @@
-name: CI devops 2025
+name: Push docker images
 on:
   # Event : Running jobs on push and pull request on specified branches
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
       - main
-      - develop
+  workflow_run:
+    workflows: ["Test Backend"]
+    types:
+      - completed
 
 jobs:
-  test-backend:
-    runs-on: ubuntu-24.04
-    steps:
-      # checkout to the source code
-      - uses: actions/checkout@v4
-
-      # Configure JDK for this actions/setup-java@4 it's required to define the distribution
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "21"
-
-      # build and test app
-      - name: Build and test with Maven
-        run: |
-          cd simple-api
-          mvn clean verify
-
-      - name: Quality code with sonar
-        run: |
-          mvn -B verify sonar:sonar -Dsonar.projectKey=tp-devops-correction-docker_github-actions-poc -Dsonar.organization=tp-devops-correction-docker -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./simple-api/pom.xml
-
-
   build-and-push-docker-image:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     needs: test-backend
     runs-on: ubuntu-24.04
     env:
