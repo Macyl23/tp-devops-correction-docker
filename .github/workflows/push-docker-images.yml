@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_run:
     workflows: ["Test Backend"]
     types:
@@ -39,7 +36,7 @@ jobs:
           context: ./simple-api
           # Note: tags has to be all lower-case
           tags: ${{env.DOCKER_HUB_USERNAME}}/${{env.API_IMAGE_NAME}}:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          
 
       # Build and push database image
       - name: Build image and push database
@@ -47,7 +44,7 @@ jobs:
         with:
           context: ./database # Path to the directory containing the Dockerfile for the database
           tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.DATABASE_IMAGE_NAME }}:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          
 
       # Build and push HTTP server image
       - name: Build image and push http-server
@@ -55,4 +52,4 @@ jobs:
         with:
           context: ./http-server # Path to the directory containing the Dockerfile for the HTTP server
           tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.HTTP_SERVER_IMAGE_NAME }}:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          
