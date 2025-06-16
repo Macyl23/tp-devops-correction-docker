@@ -53,11 +53,21 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./simple-api
           # Note: tags has to be all lower-case
-          tags: ${{env.DOCKER_HUB_USERNAME}}/${{env.DOCKER_IMAGE_NAME}}
+          tags: ${{env.DOCKER_HUB_USERNAME}}/${{env.DOCKER_IMAGE_NAME}}:latest
           push: ${{ github.ref == 'refs/heads/main' }}
 
-      # - name: Build image and push database
-      #     # DO the same for database
+      # Build and push database image
+      - name: Build image and push database
+        uses: docker/build-push-action@v6
+        with:
+          context: ./database # Path to the directory containing the Dockerfile for the database
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.DATABASE_IMAGE_NAME }}:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
 
-      # - name: Build image and push httpd
-      #     # DO the same for httpd
+      # Build and push HTTP server image
+      - name: Build image and push http-server
+        uses: docker/build-push-action@v6
+        with:
+          context: ./http-server # Path to the directory containing the Dockerfile for the HTTP server
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.HTTP_SERVER_IMAGE_NAME }}:latest
+          push: ${{ github.ref == 'refs/heads/main' }}
