@@ -7,7 +7,7 @@ COPY src ./src
 RUN mvn package -DskipTests
 
 # Run
-FROM amazoncorretto:21
+FROM eclipse-temurin:21-jre-alpine
 ENV SIMPLE_API_HOME=/opt/simple-api
 WORKDIR $SIMPLE_API_HOME
 COPY --from=simple-api-build $SIMPLE_API_HOME/target/*.jar $SIMPLE_API_HOME/simpleapi.jar
