@@ -10,8 +10,6 @@
     image: macyl23/tp-devops-simple-api:latest
     state: started
     restart_policy: always
-    ports:
-      - "8000:8000"
     env:
       ENVIRONMENT: production
       DATABASE_HOST: "{{ db_host }}"
