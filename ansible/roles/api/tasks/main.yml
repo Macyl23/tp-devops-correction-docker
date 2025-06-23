@@ -20,3 +20,5 @@
       - "8000:8000"
     env:
       ENVIRONMENT: production
+    networks:
+      - name: app_network

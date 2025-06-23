@@ -1,0 +1,19 @@
+- name: Create Docker volume for DB data
+  community.docker.docker_volume:
+    name: db_data
+    state: present
+
+- name: Run database container
+  community.docker.docker_container:
+    name: database
+    image: postgres:14
+    state: started
+    restart_policy: always
+    networks:
+      - name: app_network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env:
+      POSTGRES_DB: "{{ db_name }}"
+      POSTGRES_USER: "{{ db_user }}"
+      POSTGRES_PASSWORD: "{{ db_password }}"
