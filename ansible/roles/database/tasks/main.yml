@@ -1,12 +1,13 @@
-- name: Create Docker volume for DB data
-  community.docker.docker_volume:
-    name: db_data
-    state: present
+- name: Pull Database image from Docker Hub
+  docker_image:
+    name: macyl23/tp-devops-simple-database
+    source: pull
+    tag: latest
 
 - name: Run database container
   community.docker.docker_container:
     name: database
-    image: postgres:14
+    image: macyl23/tp-devops-simple-database:latest
     state: started
     restart_policy: always
     networks:
@@ -15,5 +16,5 @@
       - db_data:/var/lib/postgresql/data
     env:
       POSTGRES_DB: "{{ db_name }}"
-      POSTGRES_USER: "{{ db_user }}"
+      POSTGRES_USER: "usr"
       POSTGRES_PASSWORD: "{{ db_password }}"

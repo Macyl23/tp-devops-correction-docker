@@ -1,0 +1,16 @@
+- name: Pull httpd image from Docker Hub
+  community.docker.docker_image:
+    name: macyl23/tp-devops-simple-http-server
+    tag: latest
+    source: pull  # Or 'build' with `path:` if you want to build locally
+
+- name: Run httpd container
+  community.docker.docker_container:
+    name: httpd
+    image: macyl23/tp-devops-simple-http-server:latest
+    state: started
+    restart_policy: always
+    ports:
+      - "8080:80" 
+    networks:
+      - name: app_network

@@ -34,7 +34,7 @@ jobs:
     needs: test-backend
     runs-on: ubuntu-24.04
     env:
-      API_IMAGE_NAME: "tp-devops-simple-api"
+      API_IMAGE_NAME: "simple-api"
       DATABASE_IMAGE_NAME: "tp-devops-simple-database"
       HTTP_SERVER_IMAGE_NAME: "tp-devops-simple-http-server"
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}

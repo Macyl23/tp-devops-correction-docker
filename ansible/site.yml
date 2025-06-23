@@ -4,5 +4,6 @@
   roles: 
     - docker
     - network
-    - api
     - database
+    - api
+    - httpd

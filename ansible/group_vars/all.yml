@@ -1,6 +1,6 @@
 dockerhub_username: macyl23
 dockerhub_password: G6yqO0FV4eeDQtke
 # group_vars/all.yml (or a specific group file)
-db_user: usr
+db_host: database
 db_password: pwd
 db_name: db
